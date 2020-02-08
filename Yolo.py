@@ -311,13 +311,22 @@ class Yolo:
 	def draw_boxes(self, image, boxes):
 		for box in boxes:
 			label = -1
-			
+
 			for i in range(len(self.labels)):
 				if box.classes[i] > self.obj_thresh:
 					label = i
 					
 			if label >= 0:
-				cv2.rectangle(image, (box.xmin,box.ymin), (box.xmax,box.ymax), (0,255,0), 3)
-				cv2.putText(image, self.labels[label] + ' ' + str(box.get_score()), (box.xmin, box.ymin - 13), cv2.FONT_HERSHEY_SIMPLEX, 1e-3 * image.shape[0], (0,255,0), 2)
+				color = (0, 0, 255)
+
+				if box.classes[label] < 0.7:
+					color = (0, 0, 255)
+				elif box.classes[label] < 0.8:
+					color = (0, 255, 255)
+				else:
+					color = (0, 255, 0)
+
+				cv2.rectangle(image, (box.xmin,box.ymin), (box.xmax,box.ymax), color, 3)
+				cv2.putText(image, self.labels[label] + ' ' + str(box.get_score()), (box.xmin, box.ymin - 13), cv2.FONT_HERSHEY_SIMPLEX, 1e-3 * image.shape[0], color, 2)
 			
 		return image 
