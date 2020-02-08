@@ -1,0 +1,12 @@
+absl-py
+astor
+gast
+google-pasta
+grpcio
+h5py
+Keras
+numpy
+opencv-python
+scipy
+six
+tensorflow
